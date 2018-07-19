@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+            integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+            crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <title>Pac Man</title>
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">Pac Man</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Game's rules</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Pac Man -->
+        <div id="game" class="container my-5">
+            <h1 class="text-center">{{ title }}</h1>
+            <h2 class="text-center">Score : {{ game.score }}</h2>
+            <p v-if="winMessage" class="text-center alert alert-success">You win the game!</p>
+            <div class="offset-4 grid my-5">
+                <!-- Lignes -->
+                <div v-for="(row, rowIndex) in game.map" :key="rowIndex" class="d-inline">
+                    <!-- Colonnes -->
+                    <div
+                        v-for="(cell, cellIndex) in row"
+                        :key="cellIndex"
+                        class="square d-inline-block"
+                        v-bind:class="{
+                            'wall': game.map[rowIndex][cellIndex].type == 'wall',
+                            'dot': game.map[rowIndex][cellIndex].type == 'dot',
+                            'bigDot': game.map[rowIndex][cellIndex].type == 'bigDot',
+                            'door': game.map[rowIndex][cellIndex].type == 'door',
+                            'blinky': game.map[rowIndex][cellIndex].type == 'blinky',
+                            'pacmanOpen': game.pacmanCellId == game.map[rowIndex][cellIndex].id && game.map[rowIndex][cellIndex].type == 'pacmanOpen',
+                            'pacmanClose': game.pacmanCellId == game.map[rowIndex][cellIndex].id && game.map[rowIndex][cellIndex].type == 'pacmanClose',
+                            'pacmanLeft': game.pacmanCellId == game.map[rowIndex][cellIndex].id && game.direction == 'left',
+                            'pacmanDown': game.pacmanCellId == game.map[rowIndex][cellIndex].id && game.direction == 'down',
+                            'pacmanUp': game.pacmanCellId == game.map[rowIndex][cellIndex].id && game.direction == 'up',
+                        }"
+                    >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vue.js -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+    </body>
+</html>
